@@ -64,6 +64,7 @@ public class NewsArticle {
                 other.publishedAt.equals(publishedAt);
     }
 
+
     //  JSON representation of NewsCollection
     //    {
     //        "status": "ok",
