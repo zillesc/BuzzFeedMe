@@ -7,9 +7,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Created by zilles on 9/1/16.
+ * Created by zilles on 1/26/17.
  */
-public class NewsArticleTest {
+public class NewsCollectionTest {
     public static final String exampleArticle = "{\n" +
             "\"author\": \"Krystie Lee Yandoli\",\n" +
             "\"title\": \"Drake And Rihanna Kissed On Stage Again And I Am Literally Dead\",\n" +
@@ -23,39 +23,34 @@ public class NewsArticleTest {
 
     Gson gson = new Gson();
     NewsArticle mArticle;
+    NewsCollection mCollection;
 
     @Before
-    public void getArticle() {
+    public void parseJSON() {
         mArticle = gson.fromJson(exampleArticle, NewsArticle.class);
+        mCollection = gson.fromJson(exampleCollection, NewsCollection.class);
     }
 
     @Test
-    public void getAuthor() throws Exception {
-        assertEquals(mArticle.getAuthor(), "Krystie Lee Yandoli");
+    public void getStatus() throws Exception {
+        assertEquals(mCollection.getStatus(), "ok");
     }
 
     @Test
-    public void getTitle() throws Exception {
-        assertEquals(mArticle.getTitle(), "Drake And Rihanna Kissed On Stage Again And I Am Literally Dead");
+    public void getSortBy() throws Exception {
+        assertEquals(mCollection.getSortBy(), "popular");
     }
 
     @Test
-    public void getDescription() throws Exception {
-        assertEquals(mArticle.getDescription(), "AUBRIH!");
+    public void getSource() throws Exception {
+        assertEquals(mCollection.getSource(), "buzzfeed");
     }
 
     @Test
-    public void getUrl() throws Exception {
-        assertEquals(mArticle.getUrl(), "https://www.buzzfeed.com/krystieyandoli/i-spilled-all-my-emotions-tonight-im-sorry");
+    public void getArticles() throws Exception {
+        NewsArticle[] articles = mCollection.getArticles();
+        assertEquals(articles.length, 10);
+        assertTrue(mArticle.equals(articles[0]));
     }
 
-    @Test
-    public void getUrlToImage() throws Exception {
-        assertEquals(mArticle.getUrlToImage(), "https://img.buzzfeed.com/buzzfeed-static/static/2016-09/1/13/campaign_images/buzzfeed-prod-fastlane03/drake-and-rihanna-kissed-on-stage-again-and-i-am--2-32240-1472749696-0_dblbig.jpg");
-    }
-
-    @Test
-    public void getPublishedAt() throws Exception {
-        assertEquals(mArticle.getPublishedAt(), "2016-09-01T15:39:36Z");
-    }
 }
